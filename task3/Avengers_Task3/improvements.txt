@@ -1,0 +1,5 @@
+Task 3 Optimization Summary:
+1. Library: Switched from Atlas to OpenBLAS (Sandybridge-vectorized) for hardware-specific acceleration.
+2. Parallelism: Utilized 16 MPI processes (mpirun -np 16) to saturate all physical cores on the node.
+3. Grid Logic: Configured a 4x4 process grid (P=4, Q=4) in HPL.dat to balance communication overhead.
+4. Parameters: Increased Problem Size (N=15000) and Block Size (NB=256) to achieve a peak performance of 18.158 Gflops.
