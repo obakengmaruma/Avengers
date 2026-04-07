@@ -1,28 +1,32 @@
-# 1.Get Status Of SSH Service On Head Node
-![Alt Text](./img/ssh-status.png)
-### Run this command to get ssh status: 'systemctl status sshd'
+# 1. Get Status Of SSH Service On Head Node
+![SSH Status](./img/ssh-status.png)
+### Run this command to get ssh status: 
+`systemctl status sshd`
 
-# 2.List Of All Running Services On Head Node
-![Alt Text](./img/services-list.png)
-### Run this command to get services list on head node: 'systemctl list-units --type=service --state=running'
+# 2. List Of All Running Services On Head Node
+![Services List](./img/services-list.png)
+### Run this command to get services list on head node: 
+`systemctl list-units --type=service --state=running`
 
-# 3.Identify SSH Process on Compute Node
-![Alt Text](./img/htop-commands.png)
-### Run this command for htop: 'htop'
-### TIP! (Once in htop, press F4 to filter and type ssh to isolate the process)
+# 3. Identify SSH Process on Compute Node
+![HTOP SSH Process](./img/htop-command.png)
+### Run this command for htop: 
+`htop`
+### TIP! (Once in htop, press F4 to filter and type "ssh" to isolate the process)
 
-# 4.CPU Details (Head and Com2) via Tmux
-![Alt Text](./img/tmux-analysis.png)
-### Run this command to enable tmux: 'tmux' to start new session
-### Then hold 'Ctrl + B' together and let go for a split second, then press 'Shift + 5' 
-### Type 'sinfo' to view what's haeppening on the cluster.
-### Look at the STATE column for com2.
-### If it says idle or mix, it has free resources.
-### If it says alloc, it is 100% full.
-### If it says down or drain, the node is broken/offline.
-### Type 'srun -w com(the free node number) --pty /bin/bash' as it is the official way to ask Slurm for a resource allocation and get an interactive job on that node
-### type exit on both terminals to return to the main one
+# 4. CPU Details (Head and Com5) via Tmux
+![Tmux Analysis](./img/tmux-analysis.png)
+### Steps to reproduce:
+1. Run `tmux` to start a new session.
+2. Press `Ctrl + B`, release, then press `Shift + 5` (%) to split the screen.
+3. Use `sinfo` to check node availability.
+   * **idle/mix**: Resources available.
+   * **alloc**: 100% full.
+4. Run `srun -w com5 --pty /bin/bash` to get an **interactive** job on an available node (used com5 as com2 was allocated).
+5. Run the CPU check: `lscpu | grep -E "^Architecture|^CPU\(s\):|^Flags"`
+6. Type `exit` in both panes to close the session.
 
 # 5. SSH Logs from the Last Hour on Head Node
-![Alt Text](./img/ssh-logs.png)
-### Type command 'journalctl -u sshd --since "1 hour ago"' to view ssh logs
+![SSH Logs](./img/ssh-logs.png)
+### Run this command to view SSH logs:
+`journalctl -u sshd --since "1 hour ago"`
