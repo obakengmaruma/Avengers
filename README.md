@@ -13,6 +13,7 @@ Please complete the below task to the best of your abilities.
 1. [Task 5](/task5/README.md) - Scalability
 1. [Task 6](/task6/README.md) - Application DFTB+
 1. [Task 7](/task7/README.md) - Application OpenMX
+1. [Task 8](/task8/README.md) - MILC
 
 ### Lessons
 
