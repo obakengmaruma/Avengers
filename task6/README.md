@@ -144,10 +144,19 @@ Some things worth investigating and writing to README.md:
 > [!NOTE]
 > Please answer the investigation questions in your own words. We will be checking submissions for AI-generated responses. Marks will not be awarded for answers that appear to be AI-generated.
 - What does `SCCTolerance` control?
+  SCCTolerance basically controls how strict the calculation is when deciding it has “converged.” In the SCC cycle, the program keeps updating the electron density until things stop changing significantly. This parameter sets the cutoff for how small that change needs to be. So, a smaller value means higher accuracy, but it also takes longer to finish.
+
 - What does `MaxSCCIterations` do?
-- What does the `Driver` block do when it is not empty?
+  This acts like a safety cap on the number of SCC iterations. If the system is struggling to converge, you don’t want it running forever. So this parameter limits how many times the program will try before giving up, saving both time and computational resources.
+
+- What does the `Driver` block do when it is nThe Driver block is used for structural manipulations. 
+  When the Driver block isn’t empty, it means you’re asking the program to actually move atoms around instead of just calculating energy at a fixed structure. For example, using something like ConjugateGradient tells DFTB+ to optimize the geometry—basically, it adjusts atomic positions until it finds the lowest energy configuration.
+  
 - How do MPI processes and OMP threads interact, and what combination is fastest on this hardware?
+  MPI and OpenMP work together to parallelize the computation, but in different ways. MPI splits the workload across multiple processes (often across cores or even nodes), while OpenMP handles parallelism within each process using threads. On this hardware, the best performance came from using 16 MPI processes with 1 OpenMP thread each. That setup matched the number of physical cores, so it avoided overhead from thread contention and made full use of the CPU.
+
 - What does the `Parallel` block in `dftb_in.hsd` allow you to configure?
+  The Parallel block lets you control how the workload is divided across processors. For example, you can decide how tasks like k-point calculations are distributed. It’s useful for optimizing performance, especially for larger systems, because you can balance the workload more efficiently across available cores.
 
 > [!TIP]
 > The DFTB+ documentation is at https://dftbplus-recipes.readthedocs.io/en/stable/. Read carefully — the answers are in there somewhere.
